@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scarab of stability simulator</title>
+    <style>
+        svg {
+            width: 600px;
+            height: 600px;
+        }
+        #logContainer {
+            max-height: 100px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    Simulation of: <a href="https://www.poewiki.net/wiki/Scarab_of_Stability">https://www.poewiki.net/wiki/Scarab_of_Stability</a>
+</div>
+<svg viewBox="-50 -50 700 700">
+    <!-- Original hexagon -->
+    <line x1="150" y1="15" x2="285" y2="75" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+    <line x1="285" y1="75" x2="285" y2="225" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+    <line x1="285" y1="225" x2="150" y2="285" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+    <line x1="150" y1="285" x2="15" y2="225" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+    <line x1="15" y1="225" x2="15" y2="75" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+    <line x1="15" y1="75" x2="150" y2="15" style="stroke:rgb(216, 216, 0);stroke-width:5" />
+
+    <!-- Exploded hexagon -->
+    <line id="portal_1" x1="170" y1="-5" x2="305" y2="55" style="stroke:rgb(0,0,256);stroke-width:5" />
+    <line id="portal_2" x1="305" y1="75" x2="305" y2="225" style="stroke:rgb(0,0,256);stroke-width:5" />
+    <line id="portal_3" x1="305" y1="245" x2="170" y2="305" style="stroke:rgb(0,0,256);stroke-width:5" />
+    <line id="portal_4" x1="130" y1="305" x2="-5" y2="245" style="stroke:rgb(0,0,256);stroke-width:5" />
+    <line id="portal_5" x1="-5" y1="225" x2="-5" y2="75" style="stroke:rgb(0,0,256);stroke-width:5" />
+    <line id="portal_6" x1="-5" y1="55" x2="130" y2="-5" style="stroke:rgb(0,0,256);stroke-width:5" />
+</svg>
+
+<button onclick="enterPortal()">Enter a portal/Open new map</button> <button onclick="enterPortalMultiple(10, 100)">x10</button> <button onclick="enterPortalMultiple(100, 10)">x100</button> <button onclick="enterPortalMultiple(1000, 1)">x1000</button>
+
+<div id="logContainer">
+    <p>Action log:</p>
+    <ul id="actionLog"></ul>
+</div>
+
+<p>Portals entered: <span id="portalsEnteredCounter">0</span></p>
+<p>Scarab procs: <span id="scarabProcCounter">0</span></p>
+<p>Maps opened: <span id="mapsOpenedCounter">1</span></p>
+
+<script>
+var portalsEnteredCount = 0;
+var scarabProcCount = 0;
+var mapsOpenedCount = 1;
+
+function enterPortal() {
+    var portal_1 = document.getElementById("portal_1");
+    var portal_2 = document.getElementById("portal_2");
+    var portal_3 = document.getElementById("portal_3");
+    var portal_4 = document.getElementById("portal_4");
+    var portal_5 = document.getElementById("portal_5");
+    var portal_6 = document.getElementById("portal_6");
+    var portalsEnteredCounter = document.getElementById("portalsEnteredCounter");
+    var scarabProcCounter = document.getElementById("scarabProcCounter");
+    var mapsOpenedCounter = document.getElementById("mapsOpenedCounter");
+
+    var randomNumber = Math.random();
+
+    if (portal_1.style.display !== "none") {
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal1 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_1.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal1 entered and consumed", "red");
+        }
+    } else if (portal_2.style.display !== "none") {
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal2 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_2.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal2 entered and consumed", "red");
+        }
+    } else if (portal_3.style.display !== "none") {
+        portal_3.style.display = "none";
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal3 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_3.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal3 entered and consumed", "red");
+        }
+    } else if (portal_4.style.display !== "none") {
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal4 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_4.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal4 entered and consumed", "red");
+        }
+    } else if (portal_5.style.display !== "none") {
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal5 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_5.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal5 entered and consumed", "red");
+        }
+    } else if (portal_6.style.display !== "none") {
+        if (randomNumber < 0.5) {
+            addToLog(portalsEnteredCount + ". Portal6 entered and not consumed", "green");
+            scarabProcCount++;
+            scarabProcCounter.textContent = scarabProcCount;
+        } else {
+            portal_6.style.display = "none";
+            addToLog(portalsEnteredCount + ". Portal6 entered and consumed", "red");
+        }
+    } else {
+        portal_1.style.display = "inline";
+        portal_2.style.display = "inline";
+        portal_3.style.display = "inline";
+        portal_4.style.display = "inline";
+        portal_5.style.display = "inline";
+        portal_6.style.display = "inline";
+        addToLog("All map portals consumed. Opening new map before opening portal", "black");
+        mapsOpenedCount++;
+        mapsOpenedCounter.textContent = mapsOpenedCount;
+        return;
+    }
+
+    portalsEnteredCount++;
+    portalsEnteredCounter.textContent = portalsEnteredCount;
+}
+
+function addToLog(lineContent, color) {
+    var actionLog = document.getElementById("actionLog");
+    var logItems = actionLog.getElementsByTagName("li");
+
+    var newLogItem = document.createElement("li");
+    newLogItem.textContent = lineContent;
+    newLogItem.style.color = color;
+    actionLog.appendChild(newLogItem);
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    var logContainer = document.getElementById("logContainer");
+    logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+function enterPortalMultiple(times, msDelay) {
+    for (var i = 0; i < times; i++) {
+        enterPortal();
+        //await sleep(msDelay);
+    }
+}
+</script>
+</body>
+</html>
